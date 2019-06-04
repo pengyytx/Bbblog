@@ -47,6 +47,7 @@ public class UserController {
         model.addAttribute("userList", list);
         return new ModelAndView(async ? "users/list :: #mainContainerReplace" : "users/list", "userModel", model);
     }
+    //获取用户新增页面
     @GetMapping("/add")
     public ModelAndView createForm(Model model){
         model.addAttribute("user", new User(null, null, null, null));

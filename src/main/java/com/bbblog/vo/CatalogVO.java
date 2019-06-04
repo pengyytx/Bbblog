@@ -4,7 +4,7 @@ package com.bbblog.vo;
 import com.bbblog.entity.Catalog;
 import java.io.Serializable;
 
-//值对象
+//值对象 value object
 //传递参数用？
 public class CatalogVO implements Serializable {
  
@@ -33,3 +33,5 @@ public class CatalogVO implements Serializable {
 	}
 
 }
+
+

@@ -35,6 +35,25 @@ public class MainController {
     public String index(){
         return "/redirect:/blogs";
     }
+
+    @GetMapping("/register")
+    public String register(){
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public String registerUser(User user) {
+        List<Authority> authorities = new ArrayList<>();
+        authorities.add(authorityService.getAuthorityById(ROLE_USER_AUTHORITY_ID));
+        user.setAuthorities(authorities);
+        //Spring Security 提供了BCryptPasswordEncoder类,实现Spring的PasswordEncoder接口使用BCrypt强哈希方法来加密密码
+        //BCrypt强哈希方法 每次加密的结果都不一样
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encode = passwordEncoder.encode(user.getPassword().trim());
+        user.setPassword(encode);
+        userService.saveUser(user);
+        return "redirect:/login";
+    }
     @GetMapping("/login")
     public String login(){
         return "/login";
@@ -47,20 +66,5 @@ public class MainController {
         return "login";
     }
 
-    @GetMapping("/register")
-    public String register(){
-        return "register";
-    }
 
-    @PostMapping("/register")
-    public String registerUser(User user) {
-        List<Authority> authorities = new ArrayList<>();
-        authorities.add(authorityService.getAuthorityById(ROLE_USER_AUTHORITY_ID));
-        user.setAuthorities(authorities);
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String encode = passwordEncoder.encode(user.getPassword().trim());
-        user.setPassword(encode);
-        userService.saveUser(user);
-        return "redirect:/login";
-    }
 }
