@@ -148,7 +148,7 @@ public class UserSpaceController {
             Pageable pageable = PageRequest.of(pageIndex, pageSize);
             page = blogService.listBlogsByTitleVote(user, keyword, pageable);
         }
-      //  assert page != null;
+        assert page != null;
         List<Blog> list = page.getContent();   //当前所在页面数据列表
 
         model.addAttribute("user", user);
@@ -220,11 +220,11 @@ public class UserSpaceController {
         model.addAttribute("catalogs", catalogs);
         return new ModelAndView("userspace/blogedit", "blogModel", model);
     }
-    @GetMapping("/{username}/blogs/{id}")
-    public String listBlogsByOrder( @PathVariable("id") Long id) {
-        System.out.println("blogId:"+id);
-        return "/userspace/blog";
-    }
+//    @GetMapping("/{username}/blogs/{id}")
+//    public String listBlogsByOrder( @PathVariable("id") Long id) {
+//        System.out.println("blogId:"+id);
+//        return "/userspace/blog";
+//    }
 
     //保存博客
     @PostMapping("/{username}/blogs/edit")

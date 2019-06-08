@@ -5,7 +5,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -14,7 +13,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 /**
  * User实体
  */
@@ -122,15 +120,6 @@ public class User implements UserDetails ,Serializable {
         this.password = password;
     }
 
-    public String getAvater() {
-        return avater;
-    }
-
-    public void setAvater(String avater) {
-        this.avater = avater;
-    }
-
-    private String avater;
 
 
     //无参构造函数 protected防止直接使用

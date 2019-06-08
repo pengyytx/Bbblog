@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-
 @Controller
 @RequestMapping("/blogs")
 public class BlogController {
@@ -36,17 +35,14 @@ public class BlogController {
 
         Page<EsBlog> page = null;
         List<EsBlog> list = null;
-        boolean isEmpty = true;  //系统初始化时，没有博客数据
+        boolean isEmpty = true;
         try {
-            if (order.equals("hot")) {//最热查询
-                Sort sort = new Sort(Sort.Direction.DESC,"readSize","commentSize","voteSize","createSize");///////
-             //   Pageable pageable = PageRequest.of(pageIndex, pageSize);
-                Pageable pageable = PageRequest.of(pageIndex, pageSize,sort);
+            if (order.equals("hot")) {
+                Pageable pageable = PageRequest.of(pageIndex, pageSize);
                 page = esBlogService.listHottestEsBlogs(keyword, pageable);
 
             } else if (order.equals("new")) {
-                Sort sort = new Sort(Sort.Direction.DESC,"createTime");///////
-                Pageable pageable = PageRequest.of(pageIndex, pageSize,sort);/////
+                Pageable pageable = PageRequest.of(pageIndex, pageSize);
                 page = esBlogService.listNewestEsBlogs(keyword, pageable);
             }
 
@@ -66,7 +62,6 @@ public class BlogController {
         model.addAttribute("page", page);
         model.addAttribute("blogList", list);
 
-        //首次访问页面才加载
         if (!async && !isEmpty) {
             List<EsBlog> newest = esBlogService.listTop5NewestEsBlogs();
             model.addAttribute("newest", newest);
@@ -94,5 +89,6 @@ public class BlogController {
         model.addAttribute("hottest", hottest);
         return "hottest";
     }
+
 
 }

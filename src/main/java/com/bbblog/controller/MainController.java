@@ -1,5 +1,4 @@
 package com.bbblog.controller;
-
 import com.bbblog.entity.Authority;
 import com.bbblog.entity.User;
 import com.bbblog.service.AuthorityService;
@@ -10,13 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 主页控制器
  */
+
 @Controller
 public class MainController {
     private static final Long ROLE_USER_AUTHORITY_ID = 2L;
@@ -29,18 +28,23 @@ public class MainController {
 
     @GetMapping("/")
     public String root(){
-        return "redirect:/index";
+        return "redirect:index";
     }
     @GetMapping("/index")
     public String index(){
-        return "/redirect:/blogs";
+        return "redirect:blogs";
     }
+
 
     @GetMapping("/register")
     public String register(){
         return "register";
     }
-
+    /**
+     * 注册用户
+     * @param user
+     * @return
+     */
     @PostMapping("/register")
     public String registerUser(User user) {
         List<Authority> authorities = new ArrayList<>();
@@ -54,6 +58,10 @@ public class MainController {
         userService.saveUser(user);
         return "redirect:/login";
     }
+    /**
+     * 获取登录界面
+     * @return
+     */
     @GetMapping("/login")
     public String login(){
         return "/login";

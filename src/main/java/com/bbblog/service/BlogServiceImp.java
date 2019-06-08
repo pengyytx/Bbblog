@@ -13,6 +13,7 @@ import javax.transaction.Transactional;
 
 @Service
 public class BlogServiceImp implements BlogService {
+
     @Autowired
     private BlogRepository blogRepository;
     @Autowired
@@ -47,31 +48,21 @@ public class BlogServiceImp implements BlogService {
 
     @Override
     public Blog getBlogById(Long id) {
-        return blogRepository.getOne(id);
+        return blogRepository.findById(id).orElse(null);
     }
 
     @Override
     public Page<Blog> listBlogsByTitleVote(User user, String title, Pageable pageable) {
-        //模糊查询
         title = "%" + title + "%";
+        //Page<Blog> blogs = blogRepository.findByUserAndTitleLikeOrderByCreateTimeDesc(user, title, pageable);
         String tags = title;
-        Page<Blog> blogs = blogRepository.findByTitleLikeAndUserOrTagsLikeAndUserOrderByCreateTimeDesc(title,user,tags,user,pageable);
-
-        return blogs;
+        return blogRepository.findByTitleLikeAndUserOrTagsLikeAndUserOrderByCreateTimeDesc(title, user, tags, user, pageable);
     }
 
     @Override
     public Page<Blog> listBlogsByTitleVoteAndSort(User user, String title, Pageable pageable) {
-        //模糊查询
         title = "%" + title + "%";
-        Page<Blog> blogs = blogRepository.findByUserAndTitleLike(user, title, pageable);
-        return blogs;
-    }
-    @Override
-    public void readingIncrease(Long id) {
-        Blog blog = blogRepository.getOne(id);
-        blog.setReadSize(blog.getReadSize() + 1);
-        this.saveBlog(blog);
+        return blogRepository.findByUserAndTitleLike(user, title, pageable);
     }
 
     @Override
@@ -80,8 +71,17 @@ public class BlogServiceImp implements BlogService {
     }
 
     @Override
+    public void readingIncrease(Long id) {
+        Blog blog = blogRepository.findById(id).orElse(null);
+        if (blog != null) {
+            blog.setReadSize(blog.getReadSize() + 1);
+        }
+        this.saveBlog(blog);
+    }
+
+    @Override
     public Blog createComment(Long blogId, String commentContent) {
-        Blog originalBlog = blogRepository.getOne(blogId);
+        Blog originalBlog = blogRepository.findById(blogId).orElse(null);
         User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Comment comment = new Comment(user, commentContent);
         if (originalBlog != null) {

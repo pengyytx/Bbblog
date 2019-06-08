@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
 import java.util.List;
 
@@ -33,7 +34,6 @@ public class CommentController {
     public String listComments(@RequestParam(value = "blogId") Long blogId, Model model) {
         Blog blog = blogService.getBlogById(blogId);
         List<Comment> comments = blog.getComments();
-
         //判断操作用户是否是评论所有者
         String commentOwner = "";
         if (SecurityContextHolder.getContext().getAuthentication() !=null && SecurityContextHolder.getContext().getAuthentication().isAuthenticated()
