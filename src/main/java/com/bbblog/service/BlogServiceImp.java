@@ -52,25 +52,6 @@ public class BlogServiceImp implements BlogService {
     }
 
     @Override
-    public Page<Blog> listBlogsByTitleVote(User user, String title, Pageable pageable) {
-        title = "%" + title + "%";
-        //Page<Blog> blogs = blogRepository.findByUserAndTitleLikeOrderByCreateTimeDesc(user, title, pageable);
-        String tags = title;
-        return blogRepository.findByTitleLikeAndUserOrTagsLikeAndUserOrderByCreateTimeDesc(title, user, tags, user, pageable);
-    }
-
-    @Override
-    public Page<Blog> listBlogsByTitleVoteAndSort(User user, String title, Pageable pageable) {
-        title = "%" + title + "%";
-        return blogRepository.findByUserAndTitleLike(user, title, pageable);
-    }
-
-    @Override
-    public Page<Blog> listBlogsByCatalog(Catalog catalog, Pageable pageable) {
-        return blogRepository.findByCatalog(catalog, pageable);
-    }
-
-    @Override
     public void readingIncrease(Long id) {
         Blog blog = blogRepository.findById(id).orElse(null);
         if (blog != null) {
@@ -79,10 +60,11 @@ public class BlogServiceImp implements BlogService {
         this.saveBlog(blog);
     }
 
+
     @Override
     public Blog createComment(Long blogId, String commentContent) {
         Blog originalBlog = blogRepository.findById(blogId).orElse(null);
-        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Comment comment = new Comment(user, commentContent);
         if (originalBlog != null) {
             originalBlog.addComment(comment);
@@ -102,7 +84,7 @@ public class BlogServiceImp implements BlogService {
     @Override
     public Blog createVote(Long blogId) {
         Blog originalBlog = blogRepository.findById(blogId).orElse(null);
-        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Vote vote = new Vote(user);
         boolean isExist = false;
         if (originalBlog != null) {
@@ -121,5 +103,24 @@ public class BlogServiceImp implements BlogService {
             originalBlog.removeVote(voteId);
         }
         this.saveBlog(originalBlog);
+    }
+
+    @Override
+    public Page<Blog> listBlogsByTitleVote(User user, String title, Pageable pageable) {
+        title = "%" + title + "%";
+        //Page<Blog> blogs = blogRepository.findByUserAndTitleLikeOrderByCreateTimeDesc(user, title, pageable);
+        String tags = title;
+        return blogRepository.findByTitleLikeAndUserOrTagsLikeAndUserOrderByCreateTimeDesc(title, user, tags, user, pageable);
+    }
+
+    @Override
+    public Page<Blog> listBlogsByTitleVoteAndSort(User user, String title, Pageable pageable) {
+        title = "%" + title + "%";
+        return blogRepository.findByUserAndTitleLike(user, title, pageable);
+    }
+
+    @Override
+    public Page<Blog> listBlogsByCatalog(Catalog catalog, Pageable pageable) {
+        return blogRepository.findByCatalog(catalog, pageable);
     }
 }
