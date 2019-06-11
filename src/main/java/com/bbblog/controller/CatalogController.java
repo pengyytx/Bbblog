@@ -54,7 +54,7 @@ public class CatalogController {
      * @return
      */
     @PostMapping
-    @PreAuthorize("authentication.name.equals(#catalogVO.username)")//指定用户才能操作方法
+    @PreAuthorize("authentication.name.equals(#catalogVO.username)")
     public ResponseEntity<Response> create(@RequestBody CatalogVO catalogVO) {
         String username = catalogVO.getUsername();
         Catalog catalog = catalogVO.getCatalog();
@@ -65,13 +65,12 @@ public class CatalogController {
             catalog.setUser(user);
             catalogService.saveCatalog(catalog);
         } catch (ConstraintViolationException e)  {
-            return ResponseEntity.ok().body(new Response(false,ConstrainViolationExceptionHandler.getMessage(e)));
+            return ResponseEntity.ok().body(new Response(false, ConstrainViolationExceptionHandler.getMessage(e)));
         } catch (Exception e) {
             return ResponseEntity.ok().body(new Response(false, e.getMessage()));
         }
         return ResponseEntity.ok().body(new Response(true, "处理成功!", null));
     }
-
     @DeleteMapping("/{id}")
     @PreAuthorize("authentication.name.equals(#username)")
     public ResponseEntity<Response> delete(String username, @PathVariable("id") Long id) {

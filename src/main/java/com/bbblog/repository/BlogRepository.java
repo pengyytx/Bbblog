@@ -6,7 +6,9 @@ import com.bbblog.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface BlogRepository extends JpaRepository<Blog,Long> {
     /**
      *
@@ -15,8 +17,8 @@ public interface BlogRepository extends JpaRepository<Blog,Long> {
      * @param pageable
      * @return
      */
-//    @Deprecated
-//    Page<Blog> findByUserAndTitleLikeOrderByCreateTimeDesc(User user, String title, Pageable pageable);
+    @Deprecated
+    Page<Blog> findByUserAndTitleLikeOrderByCreateTimeDesc(User user, String title, Pageable pageable);
 
     /**
      * 根据用户名、博客标题分页查询博客列表

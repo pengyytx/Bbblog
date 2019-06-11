@@ -5,6 +5,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
+/**
+ * id,name,uesr
+ */
 @Entity
 public class Catalog implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -21,7 +24,8 @@ public class Catalog implements Serializable {
 	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
 	@JoinColumn(name="user_id")
 	private User user;
- 
+
+	//////////////////////////////////////////////////////////////
 	protected Catalog() {
 	}
 	
@@ -29,7 +33,8 @@ public class Catalog implements Serializable {
 		this.name = name;
 		this.user = user;
 	}
-	
+	////////////////////////////////////////////////////////////////
+
 	public Long getId() {
 		return id;
 	}
@@ -37,19 +42,21 @@ public class Catalog implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
- 
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
+
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+
  
  
 }
