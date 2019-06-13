@@ -15,6 +15,7 @@
             <!-- Blog Post -->
             <div id="mainContainer">
                 <div id="mainContainerReplace">
+                    <!--/*@thymesVar id="blogList" type="java.util.List<com.bbblog.entity.es.EsBlog>"*/-->
                     <div class="card mb-4" th:each="blog : ${blogList}">
                         <div class="card-block">
                             <h2 class="card-title">
@@ -32,7 +33,7 @@
                             <p class="card-text" th:text="${blog.summary}"></p>
                             <div class="card-text">
                                 <a href="/u/minato" th:href="'/u/' + ${blog.username}" class="card-link"
-                                   th:text=${blog.username}>minato</a> 发表于 [[${#dates.format(blog.createTime,
+                                   th:text="${blog.username}">minato</a> 发表于 [[${#dates.format(blog.createTime,
                                 'yyyy-MM-dd HH:mm')}]] <i class="fa fa-eye" aria-hidden="true">[[${blog.readSize}]]</i>
                                 <i class="fa fa-heart-o" aria-hidden="true">[[${blog.voteSize}]]</i> <i class="fa fa-comment-o"
                                                                                                         aria-hidden="true">[[${blog.commentSize}]]</i>
