@@ -39,8 +39,7 @@ public class ImageUploadController {
 
             jsonObject.put("success", 1);
             jsonObject.put("message", "上传成功");
-//            jsonObject.put("url", "http://localhost:8080/blogImages/" + URLEncoder.encode(userName, "UTF-8") + "/" + multipartFile.getOriginalFilename());
-            jsonObject.put("url", "http://47.102.218.113:8080/blogImages/" + URLEncoder.encode(userName, "UTF-8") + "/" + multipartFile.getOriginalFilename());
+            jsonObject.put("url", "http://localhost:8088/blogImages/" + URLEncoder.encode(userName, "UTF-8") + "/" + multipartFile.getOriginalFilename());
         } catch (IOException e) {
             jsonObject.put("success", 0);
 
@@ -50,16 +49,23 @@ public class ImageUploadController {
 
     @PostMapping("/{userName}/avatar")
     public String avatarUpload(@PathVariable("userName") String userName, @RequestParam(value = "file", required = false) MultipartFile multipartFile) {
-        File file = new File(rootPath + File.separator + "avatar" + File.separator + multipartFile.getOriginalFilename() + "_" + userName);
+//        File file = new File(rootPath + File.separator + "avatar" + File.separator + multipartFile.getOriginalFilename() + "_" + userName);
+        System.out.println(Class.class.getClass().getResource("/").getPath());
+        File file = new File(this.getClass().getResource("/").getPath() +
+               "static" + File.separator +"images" + File.separator +"avatar" + File.separator +
+                multipartFile.getOriginalFilename() + "_" + userName);
         try {
+            if(!file.exists()){
+                file.createNewFile();
+            }
+
             OutputStream is = new FileOutputStream(file);
             is.write(multipartFile.getBytes());
             is.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        return "http://localhost:8080/blogImages/avatar/" + multipartFile.getOriginalFilename() + "_" + userName;
-        return "http://47.102.218.113:8080/blogImages/avatar/" + multipartFile.getOriginalFilename() + "_" + userName;
+        return "/images/avatar/" + multipartFile.getOriginalFilename() + "_" + userName;
 
     }
 
