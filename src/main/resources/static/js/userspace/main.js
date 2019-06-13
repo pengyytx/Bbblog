@@ -43,12 +43,12 @@ $(function () {
     // 提交用户头像的图片数据
     $("#submitEditAvatar").on("click", function () {
         var form = $('#avatarformid')[0];
-        var formData = new FormData(form);   //这里连带form里的其他参数也一起提交了,如果不需要提交其他参数可以直接FormData无参数的构造函数
+        var formData = new FormData(form);
         var base64Codes = $(".cropImg > img").attr("src");
         formData.append("file", convertBase64UrlToBlob(base64Codes));
 
         $.ajax({
-            url: 'http://localhost:8088/' + userName + '/avatar',
+            url: '/' + userName + '/avatar',
             type: 'POST',
             cache: false,
             data: formData,
@@ -73,7 +73,7 @@ $(function () {
                     success: function (data) {
                         if (data.success) {
                             // 成功后，置换头像图片
-                            $(".blog-avatar").attr("src", data.avatarUrl);
+                            $(".blog-avatar").attr("src", data.body);
                         } else {
                             toastr.error("error!" + data.message);
                         }
