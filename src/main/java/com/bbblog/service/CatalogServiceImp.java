@@ -2,7 +2,7 @@ package com.bbblog.service;
 
 import com.bbblog.entity.Catalog;
 import com.bbblog.entity.User;
-import com.bbblog.repository.CatalogReporisity;
+import com.bbblog.repository.CatalogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,31 +11,31 @@ import java.util.List;
 @Service
 public class CatalogServiceImp implements CatalogService {
     @Autowired
-    private CatalogReporisity catalogReporisity;
+    private CatalogRepository catalogRepository;
 
     @Override
     public Catalog saveCatalog(Catalog catalog) {
         //判断重复
-        List<Catalog> list = catalogReporisity.findByUserAndName(catalog.getUser(),catalog.getName());
+        List<Catalog> list = catalogRepository.findByUserAndName(catalog.getUser(),catalog.getName());
         if(list != null && list.size()>0){
             throw new IllegalArgumentException("该分类已经存在");
         }
-        return catalogReporisity.save(catalog);
+        return catalogRepository.save(catalog);
     }
 
     @Override
     public void removeCatalog(Long id) {
 
-        catalogReporisity.deleteById(id);
+        catalogRepository.deleteById(id);
     }
 
     @Override
     public Catalog getCatalogById(Long id) {
-        return catalogReporisity.getOne(id);
+        return catalogRepository.getOne(id);
     }
 
     @Override
     public List<Catalog> listCatalogs(User user) {
-        return catalogReporisity.findByUser(user);
+        return catalogRepository.findByUser(user);
     }
 }

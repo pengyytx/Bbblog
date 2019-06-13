@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CatalogReporisity extends JpaRepository<Catalog,Long> {
+public interface CatalogRepository extends JpaRepository<Catalog,Long> {
     List<Catalog> findByUser(User user);
 
     List<Catalog> findByUserAndName(User user, String name);

@@ -29,7 +29,7 @@ public class CatalogController {
     private UserService userService;
 
     @GetMapping
-    public String listComments(@RequestParam(value = "username") String username, Model model) {
+    public String listCatalog(@RequestParam(value = "username") String username, Model model) {
         User user = (User) userService.loadUserByUsername(username);
         List<Catalog> catalogs = catalogService.listCatalogs(user);
 
