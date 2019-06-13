@@ -50,7 +50,6 @@ public class ImageUploadController {
     @PostMapping("/{userName}/avatar")
     public String avatarUpload(@PathVariable("userName") String userName, @RequestParam(value = "file", required = false) MultipartFile multipartFile) {
 //        File file = new File(rootPath + File.separator + "avatar" + File.separator + multipartFile.getOriginalFilename() + "_" + userName);
-        System.out.println(Class.class.getClass().getResource("/").getPath());
         File file = new File(this.getClass().getResource("/").getPath() +
                "static" + File.separator +"images" + File.separator +"avatar" + File.separator +
                 multipartFile.getOriginalFilename() + "_" + userName);
