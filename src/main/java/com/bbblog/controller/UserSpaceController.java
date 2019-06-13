@@ -187,9 +187,10 @@ public class UserSpaceController {
 
         if (principal != null) {
             for (Vote vote : votes) {
-                vote.getUser().getUsername().equals(principal.getUsername());
-                currentVote = vote;
-                break;
+                if(vote.getUser().getUsername().equals(principal.getUsername())) {
+                    currentVote = vote;
+                    break;
+                }
             }
         }
         model.addAttribute("isBlogOwner", isBlogOwner);
