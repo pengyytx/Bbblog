@@ -1,5 +1,4 @@
 "use strict";
-//# sourceURL=blogeditor.js
 
 $(function () {
 
