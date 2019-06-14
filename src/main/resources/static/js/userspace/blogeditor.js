@@ -1,13 +1,6 @@
-/*!
- * blogedit.html 页面脚本.
- *
- * @since: 1.0.0 2017-03-26
- * @author Way Lau <https://waylau.com>
- */
 "use strict";
 //# sourceURL=blogeditor.js
 
-// DOM 加载完再执行
 $(function () {
 
     // 初始化 md 编辑器
@@ -15,8 +8,7 @@ $(function () {
         width: "100%",
         height: 500,
         syncScrolling: "single",
-        //你的lib目录的路径，我这边用JSP做测试的
-        tocm: true, // Using [TOCM]
+        tocm: true,
         tex: true, // 开启科学公式TeX语言支持，默认关闭
         flowChart: true, // 开启流程图支持，默认关闭
         path: "/editormd/lib/",

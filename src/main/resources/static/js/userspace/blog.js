@@ -74,7 +74,7 @@ $(function() {
 					 // 获取评论列表
 					 getCommnet(blogId);
 				 } else {
-					 toastr.error(data.message);
+					 toastr.error('请登录');
 				 }
 		     },
 		     error : function() {
@@ -129,7 +129,7 @@ $(function() {
 						// 成功后，重定向
 					 window.location = blogUrl;
 				 } else {
-					 toastr.error(data.message);
+					 toastr.error('请登录');
 				 }
 		     },
 		     error : function() {
@@ -138,7 +138,7 @@ $(function() {
 		 });
 	});
 
-	// 提交点赞
+	// 取消点赞
 	$(".blog-content-container").on("click","#cancelVote", function () {
 		// 获取 CSRF Token
 		var csrfToken = $("meta[name='_csrf']").attr("content");
